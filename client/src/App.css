@@ -1,0 +1,5 @@
+.user-card,
+.auth-links:hover {
+  background-color: white;
+  cursor: pointer;
+}
