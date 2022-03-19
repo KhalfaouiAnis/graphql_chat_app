@@ -9,7 +9,7 @@ const resolvers = {
   Query: {
     users: async (_, args, { userId }) => {
       if (!userId) throw new ForbiddenError("Not Authorized !");
-      const users = prisma.user.findMany({
+      const users = await prisma.user.findMany({
         orderBy: {
           createdAt: "desc",
         },
@@ -20,6 +20,22 @@ const resolvers = {
         },
       });
       return users;
+    },
+
+    messagesByUser: async (_, { receiverId }, { userId }) => {
+      if (!userId) throw new ForbiddenError("Not Authorized !");
+      const messages = await prisma.message.findMany({
+        where: {
+          OR: [
+            { senderId: userId, receiverId },
+            { senderId: receiverId, receiverId: userId },
+          ],
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+      return messages;
     },
   },
 
@@ -48,6 +64,18 @@ const resolvers = {
       if (!doMatch) throw new AuthenticationError("Invalid credentials");
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
       return { token };
+    },
+
+    createMessage: async (_, { receiverId, text }, { userId }) => {
+      if (!userId) throw new ForbiddenError("Not Authorized !");
+      const message = await prisma.message.create({
+        data: {
+          text,
+          receiverId,
+          senderId: userId,
+        },
+      });
+      return message;
     },
   },
 };
