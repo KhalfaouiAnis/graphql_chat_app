@@ -1,5 +1,38 @@
-.user-card,
-.auth-links:hover {
+.user-card:hover {
   background-color: white;
   cursor: pointer;
+}
+
+.auth-links,
+.clickable-item:hover {
+  cursor: pointer;
+}
+
+.clickable-item {
+  margin: 2px;
+}
+
+.d-flex-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.emoji-picker {
+  width: "100%";
+  max-height: "100%";
+  overflow-y: "auto";
+  background-color: "#fff";
+}
+
+.hidden {
+  visibility: hidden;
+  display: none;
 }

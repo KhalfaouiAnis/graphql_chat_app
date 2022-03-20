@@ -12,6 +12,7 @@ import {
 import { GET_ALL_USERS } from "../graphql/queries";
 
 import UserCard from "./UserCard";
+import Clickable from "./Clickable";
 
 const Sidebar = ({ setAuthenticated }) => {
   const { loading, data, error } = useQuery(GET_ALL_USERS);
@@ -40,15 +41,15 @@ const Sidebar = ({ setAuthenticated }) => {
   return (
     <Box backgroundColor="#f7f7f7" height="100vh" width="250px" padding="10px">
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Typography
-          className="auth-links"
-          textAlign="center"
-          color="blue"
-          variant="h6"
-          onClick={() => navigate("/")}
-        >
-          Chat
-        </Typography>
+        <Clickable color="blue">
+          <Typography
+            textAlign="center"
+            variant="h6"
+            onClick={() => navigate("/")}
+          >
+            Chat
+          </Typography>
+        </Clickable>
         <LogoutIcon
           className="auth-links"
           onClick={() => {
